@@ -2,13 +2,13 @@ import * as React from 'react'
 import { Button,StyleSheet,Text,View } from 'react-native';
 
 
-const Dashboard = () => {
+const Dashboard = ({navigation}) => {
 
 
   return (
         <View style={styles.container}>
              <Text style={styles.highlight}>Dahboard Page</Text> 
-             <Button onPress = {() => navigation.navigate('')} title="Click me" />
+             <Button onPress = {() => navigation.navigate('Clickme')} title="Click me" />
         </View>
   );
 };

@@ -1,32 +1,17 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import * as React from 'react' 
 
 
-export default function App() {
+import { NativeBaseProvider, Root} from 'native-base';
+import Navigator from './src/AppNavigator';
+
+
+
+function App() {
   return (
-        <View style={styles.container}>
-             <Text style={styles.highlight}>Hello</Text> 
-        </View>
+        <NativeBaseProvider>
+            <Navigator/>
+        </NativeBaseProvider>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
+export default App;

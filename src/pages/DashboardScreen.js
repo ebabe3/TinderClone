@@ -1,14 +1,13 @@
 import * as React from 'react' 
-import { Button,StyleSheet,Text,View } from 'react-native';
+import { StyleSheet, Text,View, ImageBackground } from 'react-native';
+
+import Card from '../components/Card'
 
 
-const Dashboard = ({navigation}) => {
-
-
+const Dashboard = () => {
   return (
         <View style={styles.container}>
-             <Text style={styles.highlight}>Dahboard Page</Text> 
-             <Button onPress = {() => navigation.navigate('Chat')} title="Click me" />
+          <Card />
         </View>
   );
 };

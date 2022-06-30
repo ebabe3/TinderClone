@@ -17,14 +17,29 @@ const Navigator = () => {
                 <Stack.Screen
                     name="Dashboard"
                     component={Dashboard}
+                    options={() => {
+                        return {
+                          headerShown: false,
+                        };
+                      }}
                 />
                 <Stack.Screen 
                     name="Login"
-                    component={Login}                
+                    component={Login}         
+                    options={() => {
+                        return {
+                          headerShown: false,
+                        };
+                      }}       
                 />
                 <Stack.Screen 
                     name="Chat"
-                    component={Chat}                
+                    component={Chat}   
+                    options={() => {
+                        return {
+                          headerShown: false,
+                        };
+                      }}             
                 />
             </Stack.Navigator>
         </NavigationContainer>

@@ -1,13 +1,14 @@
 import * as React from 'react' 
-import { StyleSheet, Text,View, ImageBackground } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import Card from '../components/Card'
+import users from '../assets/data/users'
 
 
 const Dashboard = () => {
   return (
         <View style={styles.container}>
-          <Card />
+          <Card user={users[0]}/>
         </View>
   );
 };

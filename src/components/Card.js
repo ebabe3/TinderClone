@@ -2,20 +2,19 @@ import * as React from 'react'
 import { StyleSheet, Text,View, ImageBackground } from 'react-native';
 
 
-const Card = () => {
+const Card = props => {
+
+    const {name, image, bio} = props.user;
 
   return (
           <View style= {styles.card}>
              <ImageBackground style={styles.imageStyle}
                 source={{
-                  uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/elon.png'
-                }}
-                >
+                  uri: image,
+                }}>
                 <View style={styles.cardInner}>
-                  <Text style={styles.name}>Elon Musk</Text>
-                  <Text style={styles.bio}>
-                      A dude with a rocket is looking for a gal with fuel
-                  </Text>
+                  <Text style={styles.name}>{name}</Text>
+                  <Text style={styles.bio}>{bio} </Text>
                 </View>
               </ImageBackground>
           </View> 

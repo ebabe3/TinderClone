@@ -2,32 +2,53 @@ import * as React from 'react'
 
 import 'react-native-gesture-handler';
 import { Pressable, StyleSheet, View, Text } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, { 
+  useAnimatedStyle, 
+  useSharedValue, 
+  withSpring,
+  useAnimatedGestureHandler,
+ } from 'react-native-reanimated';
 
 import Card from '../components/Card'
 import users from '../assets/data/users'
+import { PanGestureHandler } from 'react-native-gesture-handler';
 
 const Dashboard = () => {
 
-  const sharedValue = useSharedValue(1);
+  const translateX = useSharedValue(0);
 
   const cardStyle = useAnimatedStyle(
     () => ({
       transform:[
         {
-          translateX: sharedValue.value * 500 - 250,
+          translateX: translateX.value * 500 - 250,
         },
       ],
     })
   )
 
+  const gestureHandler = useAnimatedGestureHandler({
+    onStart: (_,) => {
+      console.warn('Touch Start');
+    },
+    onActive: (event) => {
+      translateX.value = event.translationX;
+      console.log('Touch x :', event.translationX);  
+   },
+    onEnd: () => {
+       console.warn('Touch ended');  
+    },
+});
+
   return (
     <View style={styles.container}>
-      <Animated.View style={[styles.animatedCard,cardStyle]}>
-        <Card user={users[2]}/>
-      </Animated.View>
+      <PanGestureHandler gestureHandler={gestureHandler}>
+        <Animated.View style={[styles.animatedCard,cardStyle]}>
+          <Card user={users[2]}/>
+        </Animated.View>
+      </PanGestureHandler>
       <Pressable 
-        onPress={() => (sharedValue.value = withSpring(Math.random()))}
+        onPress={() => (translateX.value = withSpring(Math.random()))}
         >
          <Text>Change Value</Text>
       </Pressable>

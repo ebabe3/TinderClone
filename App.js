@@ -1,5 +1,6 @@
 import * as React from 'react' 
 
+import 'react-native-gesture-handler';
 
 import { NativeBaseProvider, Root} from 'native-base';
 import Navigator from './src/AppNavigator';

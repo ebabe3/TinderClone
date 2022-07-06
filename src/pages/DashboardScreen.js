@@ -1,39 +1,53 @@
 import * as React from 'react' 
 
-import 'react-native-gesture-handler';
-import { Pressable, StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, 
+  useWindowDimensions, 
+  View
+} from 'react-native';
+
 import Animated, { 
   useAnimatedStyle, 
   useSharedValue, 
-  withSpring,
+  useDerivedValue,
+  interpolate,
   useAnimatedGestureHandler,
  } from 'react-native-reanimated';
 
+import { 
+  GestureHandlerRootView, 
+  PanGestureHandler 
+} from 'react-native-gesture-handler';
+
 import Card from '../components/Card'
 import users from '../assets/data/users'
-import { PanGestureHandler } from 'react-native-gesture-handler';
 
 const Dashboard = () => {
 
+  const {width: screenWidth} = useWindowDimensions();
+
   const translateX = useSharedValue(0);
+  const rotate = useDerivedValue(
+    () => interpolate(translateX.value, [0, screenWidth],[0, 60] ) + 'deg',
+    );
 
   const cardStyle = useAnimatedStyle(
     () => ({
       transform:[
         {
-          translateX: translateX.value * 500 - 250,
+          translateX: translateX.value,
         },
+        {
+          rotate: rotate.value,
+        }
       ],
     })
   )
-
   const gestureHandler = useAnimatedGestureHandler({
-    onStart: (_,) => {
-      console.warn('Touch Start');
+    onStart: (_, context) => {
+      context.startX = translateX.value;
     },
-    onActive: (event) => {
-      translateX.value = event.translationX;
-      console.log('Touch x :', event.translationX);  
+    onActive: (event, context) => {
+      translateX.value = context.startX + event.translationX;
    },
     onEnd: () => {
        console.warn('Touch ended');  
@@ -41,18 +55,14 @@ const Dashboard = () => {
 });
 
   return (
-    <View style={styles.container}>
-      <PanGestureHandler gestureHandler={gestureHandler}>
-        <Animated.View style={[styles.animatedCard,cardStyle]}>
+    <GestureHandlerRootView style={styles.container}>
+      <PanGestureHandler onGestureEvent={gestureHandler}>
+        <Animated.View collapsable={false} style={[styles.animatedCard,cardStyle]}>
           <Card user={users[2]}/>
         </Animated.View>
       </PanGestureHandler>
-      <Pressable 
-        onPress={() => (translateX.value = withSpring(Math.random()))}
-        >
-         <Text>Change Value</Text>
-      </Pressable>
-    </View>
+    </GestureHandlerRootView>
+
   );
 };
 
@@ -65,6 +75,7 @@ const styles = StyleSheet.create({
   },
   animatedCard: {
     width: '100%',
+    height: '100%',
     justifyContent:'center',
     alignItems: 'center',
   }

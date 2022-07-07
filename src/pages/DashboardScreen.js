@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react'
 
 import { StyleSheet, 
   useWindowDimensions, 
-  View
+  View,
+  Image
 } from 'react-native';
 
 import Animated, { 
@@ -22,6 +23,8 @@ import {
 
 import Card from '../components/Card'
 import users from '../assets/data/users'
+import Like from '../assets/images/LIKE.png'
+import Nope from '../assets/images/NOPE.png'
 
 const ROTATION = 60 ;
 const SWIPE_VELOCITY = 800 ;
@@ -73,6 +76,22 @@ const Dashboard = () => {
     )
   }))
 
+  const likeStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      translateX.value,
+      [0, hiddenTranslateX / 6],
+      [0, 1]
+    ),
+  }))
+
+  const nopeStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      translateX.value,
+      [0, -hiddenTranslateX / 6],
+      [0, 1]
+    ),
+  }))
+  
   const gestureHandler = useAnimatedGestureHandler({
 
     onStart: (_, context) => {
@@ -114,12 +133,21 @@ const Dashboard = () => {
       {currentProfile && (
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.View collapsable={false} style={[styles.animatedCard,cardStyle]}>
+            <Animated.Image 
+            source={Like} 
+            style={[styles.like, {left: 10}, likeStyle]} 
+            resizeMode='contain'/>
+            <Animated.Image 
+            source={Nope} 
+            style={[styles.nope, {right: 10}, nopeStyle]} 
+            resizeMode='contain'/>
             <Card user={currentProfile}/>
           </Animated.View>
         </PanGestureHandler>
       )}
     </GestureHandlerRootView>
   );
+
 
 };
 
@@ -131,8 +159,8 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   animatedCard: {
-    width: '100%',
-    flex:1,
+    width: '90%',
+    height: '70%',
     justifyContent:'center',
     alignItems: 'center',
   },
@@ -140,6 +168,22 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent:'center',
     alignItems: 'center',
+  },
+  like: {
+    width: 150,
+    height: 150,
+    position: 'absolute',
+    top: 10,
+    zIndex: 1,
+    elevation: 1,
+  },
+  nope: {
+    width: 150,
+    height: 150,
+    position: 'absolute',
+    top: 10,
+    zIndex: 1,
+    elevation: 1,
   }
 });
 

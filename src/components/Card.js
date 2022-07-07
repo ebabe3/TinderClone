@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   card:{
-    width: '95%',
-    height: '70%',
+    width: '100%',
+    height: '100%',
     borderRadius: 10,
 
     shadowColor: '#000',

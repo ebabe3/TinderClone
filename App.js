@@ -9,9 +9,9 @@ import Navigator from './src/AppNavigator';
 
 function App() {
   return (
-        <NativeBaseProvider>
-            <Navigator/>
-        </NativeBaseProvider>
+    <NativeBaseProvider>
+      <Navigator/>
+    </NativeBaseProvider>
   );
 }
 

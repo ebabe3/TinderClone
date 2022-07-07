@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Chat from './pages/ChatScreen';
 import Login from './pages/LoginScreen';
 import Dashboard from './pages/DashboardScreen';
+import Match from './pages/MatchScreen';
 
 
 
@@ -35,6 +36,15 @@ const Navigator = () => {
                 <Stack.Screen 
                     name="Chat"
                     component={Chat}   
+                    options={() => {
+                        return {
+                          headerShown: false,
+                        };
+                      }}             
+                />
+                <Stack.Screen 
+                    name="Match"
+                    component={Match}   
                     options={() => {
                         return {
                           headerShown: false,
